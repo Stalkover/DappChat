@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 //INTERNAL IMPORT
 import { 
-    ChechIfWalletConnected, 
+    CheckIfWalletConnected, 
     connectWallet, 
     connectingWithContract 
 } from '@/Utils/apiFeature';
@@ -14,8 +14,8 @@ export const ChatAppContext = React.createContext();
 
 export const ChatAppProvider = ({ children }) => {
     //USESTATE
-    const[account, setAccount] = useState('');
-    const[userName, setUserName] = useState('');
+    const [account, setAccount] = useState('');
+    const [userName, setUserName] = useState('');
     const [friendLists, setFriendLists] = useState([]);
     const [friendMsg, setFriendMsg] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -89,13 +89,57 @@ export const ChatAppProvider = ({ children }) => {
             if(name || accountAddress) return setError("Please provide account details")
 
             const contract = await connectingWithContract();
-            const addMyFriend = await contract
+            const addMyFriend = await contract.addFriend(accountAddress, name);
+            setLoading(true)
+            await addMyFriend.wait()
+            setLoading(false);
+            router.push("/");
+            window.location.reload();
         } catch(error){
             setError("Something went wrong while adding friends, try again")
         }
     }
+    //SEND MESSAGE TO YOUR FRIEND
+    const sendMessage = async({msg, address})=>{
+        try{
+            if(msg || address) return setError("Please type your message");
+
+            const contract = await connectingWithContract();
+            const addMessage = await contract.sendMessage(address, msg);
+            setLoading(true);
+            await addMessage.wait();
+            setLoading(false);
+            window.location.reload();
+        } catch (error){
+            setError("Please reload and try again");
+        }
+    };
+
+    //READ INFO
+    const readUser = async(userAddress)=>{
+        const contract = await connectingWithContract();
+        const userName = await contract.getUsername(userAddress);
+        setCurrentUserName(userName);
+        setCurrentUserAddress(userAddress);
+    }
     return (
-        <ChatAppContext.Provider value = {{ readMessage }}>
+        <ChatAppContext.Provider value = {
+            { readMessage, 
+            createAccount, 
+            addFriends, 
+            sendMessage, 
+            readUser, 
+            connectWallet,
+            CheckIfWalletConnected,
+            account, 
+            userName, 
+            friendLists, 
+            friendMsg, 
+            loading, 
+            userLists, 
+            error, 
+            currentUserName, 
+            currentUserAddress}}>
             {children}
         </ChatAppContext.Provider>
     )

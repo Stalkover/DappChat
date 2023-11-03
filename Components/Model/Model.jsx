@@ -35,7 +35,7 @@ const Model = ({
           <p>{info}</p>
           <small>{smallInfo}</small>
 
-          {/* {
+          {
             loading == true ? (
               <Loader/>
             ) : (
@@ -73,7 +73,7 @@ const Model = ({
               </div>
             </div>
             )
-          } */}
+          }
 
           <div className={Style.Model_box_right_name}>
             <div className={Style.Model_box_right_name_info}>

@@ -4,10 +4,10 @@ async function main() {
     const ChatApp = await hre.ethers.getContractFactory("ChatApp");
     const chatApp = await ChatApp.deploy();
 
-    await chatApp.waitForDeployment();
+    await chatApp.deployed();
 
     console.log(
-        `Contract Address Key: ${chatApp.target}`
+        `Contract Address Key: ${chatApp.address}`
     );
 }
 

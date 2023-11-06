@@ -7,27 +7,25 @@ import {
     connectWallet, 
     connectingWithContract 
 } from '@/Utils/apiFeature';
-import { typescript } from '@/next.config';
-
 
 export const ChatAppContext = React.createContext();
 
 export const ChatAppProvider = ({ children }) => {
     //USESTATE
-    const [account, setAccount] = useState('');
-    const [userName, setUserName] = useState('');
+    const [account, setAccount] = useState("");
+    const [userName, setUserName] = useState("");
     const [friendLists, setFriendLists] = useState([]);
     const [friendMsg, setFriendMsg] = useState([]);
     const [loading, setLoading] = useState(false);
     const [userLists, setUserLists] = useState([]);
-    const [error, setError] = useState('');
+    const [error, setError] = useState("");
 
     //CHAT USER DATA
-    const [currentUserName, setCurrentUserName] = useState('');
-    const [currentUserAddress, setCurrentUserAddress] = useState('');
+    const [currentUserName, setCurrentUserName] = useState("");
+    const [currentUserAddress, setCurrentUserAddress] = useState("");
 
     const router = useRouter();
-
+    
     //FETCH DATA TIME OF PAGE LOAD
     const fetchData = async() => {
         try{
@@ -36,6 +34,9 @@ export const ChatAppProvider = ({ children }) => {
             //GET ACCOUNT
             const connectAccount = await connectWallet();
             setAccount(connectAccount);
+            console.log("contract: ", contract)
+            console.log("connectAccount: ", connectAccount)
+            console.log("accountAddress: ", contract.address)
             //GET USERNAME
             const userName = await contract.getUsername(connectAccount);
             setUserName(userName);
@@ -45,12 +46,11 @@ export const ChatAppProvider = ({ children }) => {
             //GET ALL APP USER LIST
             const userList = await contract.getAllAppUser()
             setUserLists(userList);
-
         } catch (error) {
             setError('Please install and connect your wallet');
+            console.error("An error occured:", error);
         }
     }
-
     useEffect(() => {
         fetchData();
     }, [])
@@ -102,7 +102,7 @@ export const ChatAppProvider = ({ children }) => {
     //SEND MESSAGE TO YOUR FRIEND
     const sendMessage = async({msg, address})=>{
         try{
-            if(msg || address) return setError("Please type your message");
+            // if(msg || address) return setError("Please type your message");
 
             const contract = await connectingWithContract();
             const addMessage = await contract.sendMessage(address, msg);
@@ -123,8 +123,9 @@ export const ChatAppProvider = ({ children }) => {
         setCurrentUserAddress(userAddress);
     }
     return (
-        <ChatAppContext.Provider value = {
-            { readMessage, 
+        <ChatAppContext.Provider 
+        value = {{ 
+            readMessage, 
             createAccount, 
             addFriends, 
             sendMessage, 
@@ -139,7 +140,9 @@ export const ChatAppProvider = ({ children }) => {
             userLists, 
             error, 
             currentUserName, 
-            currentUserAddress}}>
+            currentUserAddress,
+            }}
+        >
             {children}
         </ChatAppContext.Provider>
     )

@@ -4,9 +4,9 @@ import Web3Modal from "web3modal";
 
 import {ChatAppAddress, ChatAppABI} from "../Context/constants";
 
-export const ChechIfWalletConnected = async() => {
+export const CheckIfWalletConnected = async() => {
     try {
-        if(!window.ethereum) return console.log("Install MateMask");
+        if(!window.ethereum) return console.log("Install MetaMask");
 
         const accounts = await window.ethereum.request({
             method: "eth_accounts",
@@ -21,7 +21,7 @@ export const ChechIfWalletConnected = async() => {
 
 export const connectWallet = async() => {
     try {
-        if(!window.ethereum) return console.log("Install MateMask");
+        if(!window.ethereum) return console.log("Install MetaMask");
 
         const accounts = await window.ethereum.request({
             method: "eth_requestAccounts",
@@ -42,7 +42,12 @@ export const connectingWithContract = async() => {
         const provider = new ethers.providers.Web3Provider(connection);
         const signer = provider.getSigner();
         const contract = fetchContract(signer);
-
+        if(contract){
+            console.log("Contract connection is established");
+        } else {
+            console.log("Error: Unable to connect to the contract");
+        }
+        console.log(contract)
         return contract;
     } catch (error) {
         console.log(error);

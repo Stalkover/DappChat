@@ -5,13 +5,14 @@ import create2 from "./plus.png";
 import accountName from "./account.png";
 import hero from "./hero.png";
 import account from "./account.png";
-import send from "./send.jpg";
+import send from "./send.png";
 import username from "./username.png";
 import clear from "./clear.png";
 import search from "./search.png";
 import user from "./user.png";
 import smile from "./smile.png";
 import file from "./file.png";
+import loader from "./loader.gif";
 import image1 from "./img1.png";
 import image2 from "./img2.png";
 import image3 from "./img3.png";
@@ -35,5 +36,6 @@ export default {
     search,
     user,
     smile,
-    file
+    file,
+    loader
 }

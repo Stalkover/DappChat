@@ -1,12 +1,11 @@
 
-
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.0 <0.9.0;
 
 
 contract ChatApp{
 
-    //USER STRUCT
+    //user struct
     struct user{
         string name;
         friend[] friendList;
@@ -33,12 +32,12 @@ contract ChatApp{
     mapping(address => user) userList;
     mapping(bytes32 => message[]) allMessages;
 
-    //CHECK USER EXIST
+    //check if user exists
     function checkUserExists(address pubkey) public view returns(bool){
         return bytes(userList[pubkey].name).length > 0;
     }
 
-    //CREATE ACCOUNT
+    //create account
     function createAccount(string calldata name) external {
         require(checkUserExists(msg.sender) == false, "User already exists");
         require(bytes(name).length>0, "Username cannot be empty");
@@ -47,13 +46,13 @@ contract ChatApp{
 
         getAllUsers.push(AllUserStruck(name, msg.sender));
     }
-    //GET USERNAME
+    //get username
     function getUsername(address pubkey) external view returns(string memory){
         require(checkUserExists(pubkey), "User is not registered");
         return userList[pubkey].name;
     }
 
-    //ADD FRIENDS
+    //add friends
     function addFriend(address friend_key, string calldata name) external{
         require(checkUserExists(msg.sender), "Create an account first");
         require(checkUserExists(friend_key), "User is not registered");
@@ -64,7 +63,7 @@ contract ChatApp{
         _addFriend(friend_key, msg.sender, userList[msg.sender].name);
     }
 
-    //CHECK ALREADY FRIENDS
+    //check if already friends
     function checkAlreadyFriends(address pubkey1, address pubkey2) internal view returns(bool){
         if(userList[pubkey1].friendList.length > userList[pubkey2].friendList.length){
             address tmp = pubkey1;
@@ -84,19 +83,19 @@ contract ChatApp{
         userList[me].friendList.push(newFriend);
     }
 
-    //GET MY FRIEND
+    //get friend list
     function getMyFriendList() external view returns(friend[] memory){
         return userList[msg.sender].friendList;
     }
 
-    //GET CHAT CODE
+    //get chat
     function _getChatCode(address pubkey1, address pubkey2) internal pure returns(bytes32){
         if(pubkey1 < pubkey2){
             return keccak256(abi.encodePacked(pubkey1, pubkey2));
         } else return keccak256(abi.encodePacked(pubkey2, pubkey1));
     }
 
-    //SEND MESSAGE
+    //send message
     function sendMessage(address friend_key, string calldata _msg) external{
         require(checkUserExists(msg.sender), "Create an account first");
         require(checkUserExists(friend_key), "User is not registered");
@@ -107,7 +106,7 @@ contract ChatApp{
         allMessages[chatCode].push(newMsg);
     }
 
-    //READ MESSAGE
+    //read message
     function readMessage(address friend_key) external view returns(message[] memory){
         bytes32 chatCode = _getChatCode(msg.sender, friend_key);
         return allMessages[chatCode];

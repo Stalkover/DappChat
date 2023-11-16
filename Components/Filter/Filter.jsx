@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react'
 import Image from "next/image";
 
-//INTERNAL IMPORT
 import Style from "./Filter.module.css"
 import images from "../../assets"
 import {ChatAppContext} from "../../Context/ChatAppContext"
@@ -45,12 +44,9 @@ const Filter = () => {
       {addFriend && (
         <div className={Style.Filter_model}>
           <Model openBox={setAddFriend} 
-          title="WELCOME TO" 
-          head="CHAT BUDDY"
-          info="Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-          Esse tempora ipsum eveniet laborum? Necessitatibus eveniet 
-          nemo quae perferendis ab voluptatem accusantium praesentium 
-          facilis voluptatibus, autem veniam inventore placeat a possimus!"
+          title="Welcome to" 
+          head="BlockChat"
+          info="You are one step away from entering the blockchain decentralized chat experience!"
           smallInfo="Select your friend name and address"
           image={images.hero}
           functionName={addFriends}

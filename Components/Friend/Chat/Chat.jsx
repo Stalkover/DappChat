@@ -2,11 +2,13 @@ import React, {useEffect, useState} from 'react';
 import Image from "next/image";
 import {useRouter} from "next/router";
 
-//INTERNAL IMPORT
 import Style from "./Chat.module.css";
 import images from "../../../assets";
 import {converTime} from "../../../Utils/apiFeature";
 import {Loader} from "../../index";
+
+//import { EmojiButton } from '@joeattardi/emoji-button';
+
 const Chat = ({
   functionName, 
   readMessage, 
@@ -16,9 +18,9 @@ const Chat = ({
   loading, 
   currentUserName,
   currentUserAddress,
+  readUser,
 }) => {
 
-  //USE STATE
   const [message, setMessage] = useState('');
   const [chatData, setChatData] = useState({
     name: "",
@@ -32,6 +34,12 @@ const Chat = ({
     setChatData(router.query);
   }, [router.isReady]);
 
+  useEffect(()=>{
+    if(chatData.address){
+      readMessage(chatData.address);
+      readUser(chatData.query.address);
+    }
+  },[])
   // console.log(chatData.address, chatData.name);
   return (
     <div className={Style.Chat}>
@@ -101,8 +109,9 @@ const Chat = ({
                 width={50}
                 height={50}
                 />
-              <input type='text' placeholder="type your message"
-                onChange={(e)=>setMessage(e.target.value)}/>
+              <input type='text' placeholder="type your message" 
+              onChange={(e)=>setMessage(e.target.value)}
+              />
               <Image src={images.file}
                 alt="file"
                 width={50}
@@ -111,12 +120,13 @@ const Chat = ({
                   loading == true ? (
                     <Loader/>
                   ) : (
-                    <Image src={images.file}
+                    <Image src={images.send}
                     alt="send"
                     width={50}
                     height={50}
                     onClick={()=>
-                      functionName({msg: message, address: chatData.address})}/>
+                      functionName({msg: message, address: chatData.address})}
+                      />
                   )
                 }
             </div>

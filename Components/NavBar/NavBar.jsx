@@ -19,22 +19,6 @@ const NavBar = () => {
       menu: "CHAT",
       link: "/",
     },
-    {
-      menu: "CONTACT",
-      link: "/",
-    },
-    {
-      menu: "SETTING",
-      link: "/",
-    },
-    {
-      menu: "FAQ",
-      link: "/",
-    },
-    {
-      menu: "TERMS OF USE",
-      link: "/",
-    },
   ];
 
   //USESTATE

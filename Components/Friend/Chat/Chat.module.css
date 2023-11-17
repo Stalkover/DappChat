@@ -16,7 +16,7 @@
 }
 .Chat_box_right p,
 .Chat_box_left p{
-    background-color: #F182035B;
+    background-color: #32646d;
     padding: 1rem;
     border-top-right-radius: .5rem;
     border-top-left-radius: .5rem;
@@ -39,11 +39,11 @@
 
 .Chat_box_send_img input{
     width: 100%;
-    background-color: #F182035B;
+    background-color: #32646d;
     outline: none;
     border: none;
     padding: 1rem;
-    color: #F18203;
+    color: #d5f7ff;
     border-radius: .5rem;
 }
 

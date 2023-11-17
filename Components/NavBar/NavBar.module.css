@@ -27,8 +27,8 @@
 }
 
 .active_btn{
-    color: #F18303;
-    border-bottom: 2px solid #F18303;
+    color: rgb(120, 198, 207);
+    border-bottom: 2px solid rgb(120, 198, 207);
     padding-bottom: .4rem;
 }
 
@@ -43,7 +43,7 @@
     border: none;
     border-radius: .5rem;
     font-size: 1.1rem;
-    color: #F18303;
+    color: rgb(120, 198, 207);
     font-weight: 700;
     cursor: pointer;
 
@@ -68,7 +68,7 @@
 .modelBox{
     position: fixed;
     inset: 0 0 0 0;
-    background-color: #292F3F;
+    background-color: #32646d;
     z-index: 77777777;
 }
 
@@ -95,7 +95,7 @@
     .NavBar_box_right_menu{
         position: fixed;
         z-index: 111111;
-        background-color: #292F3F;
+        background-color: #142c30;
         width: 100%;
         flex-direction: column;
         height: 100vh;
@@ -108,7 +108,7 @@
         display: block;
         position: fixed;
         z-index: 1111111;
-        background-color: #292F3F;
+        background-color: #142c30;
         inset: 0 0 0 0;
         text-align: center;
         padding-top: 4rem;

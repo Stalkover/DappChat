@@ -7,7 +7,7 @@ import images from "../../../assets";
 import {converTime} from "../../../Utils/apiFeature";
 import {Loader} from "../../index";
 
-//import { EmojiButton } from '@joeattardi/emoji-button';
+import InputEmoji from "react-input-emoji";
 
 const Chat = ({
   functionName, 
@@ -21,7 +21,9 @@ const Chat = ({
   readUser,
 }) => {
 
+
   const [message, setMessage] = useState('');
+  const [text, setText] = useState(""); 
   const [chatData, setChatData] = useState({
     name: "",
     address: "",
@@ -41,6 +43,12 @@ const Chat = ({
     }
   },[])
   // console.log(chatData.address, chatData.name);
+
+  const handleInputChange = (e) => {
+    const newValue = e;
+    setMessage(newValue);
+
+  };
   return (
     <div className={Style.Chat}>
       {currentUserName && currentUserAddress ? (
@@ -105,17 +113,25 @@ const Chat = ({
         {currentUserName && currentUserAddress ? (
           <div className={Style.Chat_box_send}>
             <div className={Style.Chat_box_send_img}>
-              <Image src={images.smile} alt="smile"
+              {/* <Image src={images.smile} alt="smile"
                 width={50}
                 height={50}
-                />
-              <input type='text' placeholder="type your message" 
+                /> */}
+              <InputEmoji  
+                value={message} 
+                onChange={handleInputChange}
+                cleanOnEnter 
+                placeholder="Type a message"
+              /> 
+              {/* <input type='text' placeholder="type your message" 
               onChange={(e)=>setMessage(e.target.value)}
-              />
+              /> */}
               <Image src={images.file}
                 alt="file"
                 width={50}
-                height={50}/>
+                height={50}
+                />
+
                 {
                   loading == true ? (
                     <Loader/>
